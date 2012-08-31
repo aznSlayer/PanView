@@ -6,7 +6,7 @@ horizontally given the maximum pan bounds. It provides a smooth
 animation handling user touches. The view automatically snaps to the
 right or left depending on the point the user lifts his/her finger.
 
-![1] ![2]
+![1] -> ![2]
 
 **Download:** [JAR library](https://github.com/downloads/herroWorld/PanView/panview_v1.0.jar)
 
