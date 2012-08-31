@@ -302,8 +302,12 @@ public class PanView implements GestureDetector.OnGestureListener, Runnable {
             Log.i(TAG, "fling from: " + startX + " by: " + dX);
         }
 
-        if (dX == 0)
+        if (dX == 0) {
+            if (mOnPanListener != null) {
+                mOnPanListener.onPanEnd();
+            }
             return;
+        }
 
         // Start panning the scroller
         mScroller.startScroll(startX, 0, dX, 0);
