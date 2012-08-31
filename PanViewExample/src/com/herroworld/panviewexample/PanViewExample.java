@@ -45,8 +45,9 @@ public class PanViewExample extends Activity implements OnMeasuredListener, OnPa
 
         mPanView = new PanView(this, view);
 
-        // Listen to when the pan starts and ends
+        // Listen to when the pan starts/ends measure
         mPanView.setOnPanListener(this);
+        mPanView.setOnMeasuredListener(this);
 
         // PanView implements GestureDetector.OnGestureListener
         mGestureDetector = new GestureDetector(this, mPanView);
@@ -73,8 +74,9 @@ public class PanViewExample extends Activity implements OnMeasuredListener, OnPa
         }
     };
 
-    // Calling class HAVE to Implement the OnMeasuredListener interface to
-    // provide the maximum pan
+    /**
+     * Interface to provide the maximum pan.
+     */
     @Override
     public int getMaxPan() {
         return (int) getResources().getDimension(R.dimen.max_pan);
