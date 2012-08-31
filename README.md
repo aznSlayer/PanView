@@ -1,0 +1,4 @@
+PanView
+=======
+
+Horizontal pan view.
