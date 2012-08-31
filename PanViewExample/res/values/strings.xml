@@ -1,0 +1,9 @@
+<resources>
+
+    <string name="app_name">PanViewExample</string>
+    <string name="herro_world">Herro world!</string>
+    <string name="title_activity_pan_view_example">PanViewExample</string>
+    <string name="pan">Pan</string>
+    <string name="unpan">Unpan</string>
+
+</resources>
