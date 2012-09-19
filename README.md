@@ -8,7 +8,7 @@ right or left depending on the point the user lifts his/her finger.
 
 ![1] -> ![2]
 
-**Download:** [JAR library](https://github.com/downloads/herroWorld/PanView/panview_v1.0.jar)
+**Download:** [JAR library](https://github.com/downloads/herroWorld/PanView/panview_v1.1.jar)
 
 ## Usage
 When using this library, simply add the JAR to your project:
@@ -47,11 +47,19 @@ mGestureDetector = new GestureDetector(this, mPanView);
 mGestureDetector.setIsLongpressEnabled(false);
 
 /**
- * Interface to provide the maximum pan.
+ * Interface to provide the maximum right pan.
  */
 @Override
-public int getMaxPan() {
+public int getMaxRightPan() {
     return (int) getResources().getDimension(R.dimen.max_pan);
+}
+
+/**
+ * Interface to provide the maximum left pan.
+ */
+@Override
+public int getMaxLeftPan() {
+    return 0;
 }
 
 OnTouchListener mTouchListener = new OnTouchListener() {
@@ -76,7 +84,7 @@ OnTouchListener mTouchListener = new OnTouchListener() {
 ```
 
 ## To Do
-* Add functionality to support panning in all directions
+* Add functionality to support panning in top and bottom
 
 ## License
 * [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)

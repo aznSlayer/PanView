@@ -74,14 +74,6 @@ public class PanViewExample extends Activity implements OnMeasuredListener, OnPa
         }
     };
 
-    /**
-     * Interface to provide the maximum pan.
-     */
-    @Override
-    public int getMaxPan() {
-        return (int) getResources().getDimension(R.dimen.max_pan);
-    }
-
     @Override
     public void onPanStart() {
     }
@@ -96,5 +88,21 @@ public class PanViewExample extends Activity implements OnMeasuredListener, OnPa
         } else {
             mPanButton.setText(getResources().getString(R.string.pan));
         }
+    }
+
+    /**
+     * Interface to provide the maximum right pan.
+     */
+    @Override
+    public int getMaxRightPan() {
+        return (int) getResources().getDimension(R.dimen.max_pan);
+    }
+
+    /**
+     * Interface to provide the maximum left pan.
+     */
+    @Override
+    public int getMaxLeftPan() {
+        return 0;
     }
 }

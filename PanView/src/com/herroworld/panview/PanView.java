@@ -31,7 +31,9 @@ public class PanView implements GestureDetector.OnGestureListener, Runnable {
      * Interface to get the maximum pan.
      */
     public interface OnMeasuredListener {
-        public int getMaxPan();
+        public int getMaxRightPan();
+
+        public int getMaxLeftPan();
     }
 
     /**
@@ -96,7 +98,7 @@ public class PanView implements GestureDetector.OnGestureListener, Runnable {
     }
 
     /**
-     * Hides/Pans the view based on the maximum pan, as provided by {@Link
+     * Hides/Un-Pans the view based on the maximum pan, as provided by {@Link
      *  OnMeasuredListener#getMaxPan()}.
      * 
      * @return True if the view was panned/hidden, false otherwise.
@@ -126,9 +128,9 @@ public class PanView implements GestureDetector.OnGestureListener, Runnable {
     }
 
     /**
-     * Shows/Un-pans the full view.
+     * Fully pans the main view.
      * 
-     * @return True if the view was fully shown, false otherwise.
+     * @return True if the view was fully panned, false otherwise.
      */
     public boolean pan() {
         if (!isViewMeasured()) {
@@ -142,7 +144,7 @@ public class PanView implements GestureDetector.OnGestureListener, Runnable {
         // Horizontal distance to travel
         final int startX = mView.getScrollX();
 
-        final int dX = startX + getMaxPan();
+        final int dX = startX + getMaxRightPan() - getMaxLeftPan();
         fling(startX, dX);
 
         return true;
@@ -261,12 +263,16 @@ public class PanView implements GestureDetector.OnGestureListener, Runnable {
         if (x < 0) { // Pan to the right
             // Negate maximum pan value because of negative scrollX value for
             // right pans
-            final int maxPan = -getMaxPan();
+            final int maxRightPan = -getMaxRightPan();
+
+            if (startX == (maxRightPan + getMaxLeftPan())) {
+                return;
+            }
 
             // Making sure view does not pan more than maximum pan
-            if ((startX + x) < maxPan) {
+            if ((startX + x - getMaxLeftPan()) < maxRightPan) {
                 // Pan as much as needed to get to maximum pan value
-                dX = maxPan - startX;
+                dX = maxRightPan - startX + getMaxLeftPan();
             } else {
                 dX = x;
             }
@@ -326,8 +332,8 @@ public class PanView implements GestureDetector.OnGestureListener, Runnable {
     private void completePanning() {
         final int currentX = mView.getScrollX();
 
-        final int maxPan = getMaxPan();
-        final int middle = -maxPan / 2;
+        final int maxRightPan = getMaxRightPan();
+        final int middle = -maxRightPan / 2;
         final int dX;
 
         // Check if current position is above or below the middle point; pan
@@ -335,15 +341,29 @@ public class PanView implements GestureDetector.OnGestureListener, Runnable {
         if (currentX > middle) {
             dX = currentX;
         } else {
-            dX = maxPan + currentX;
+            dX = maxRightPan + currentX - getMaxLeftPan();
         }
 
         fling(currentX, dX);
     }
 
-    private int getMaxPan() {
+    /**
+     * @return The maximum right pan bound
+     */
+    private int getMaxRightPan() {
         if (mOnMeasuredListener != null) {
-            return mOnMeasuredListener.getMaxPan();
+            return mOnMeasuredListener.getMaxRightPan();
+        } else {
+            return MAX_PAN;
+        }
+    }
+
+    /**
+     * @return The maximum left pan bound
+     */
+    private int getMaxLeftPan() {
+        if (mOnMeasuredListener != null) {
+            return mOnMeasuredListener.getMaxLeftPan();
         } else {
             return MAX_PAN;
         }
